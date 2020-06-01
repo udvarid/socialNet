@@ -4,7 +4,8 @@ case class User(name: String, age: Int) {
 
   var friends: List[User] = List()
 
-  def addFriend(friend: User): Unit = friends :+ friend
+  def addFriend(friend: User): Unit =
+    friends = friends :+ friend
 
   var visitFlag: VisitFlag = new VisitFlag
 
@@ -20,4 +21,8 @@ case class User(name: String, age: Int) {
   }
 
   def isVisited(): Boolean = visitFlag.visited
+
+  override def toString: String = {
+    "Name: " + this.name + ". Age: " + this.age + ". Number of friends: " + friends.length
+  }
 }

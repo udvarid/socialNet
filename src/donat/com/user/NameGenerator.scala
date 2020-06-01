@@ -2,11 +2,13 @@ package donat.com.user
 
 import scala.util.Random
 
-class NameGenerator {
+object NameGenerator {
 
-  val familyName: List[String] = List("A", "B", "C")
+  private val familyName: List[String] = List("Kovács", "Nemes", "Udvari", "Vas", "Kis", "Nagy", "Szent", "Simovits",
+    "Kott", "Gál", "Társas", "Buzády")
 
-  val firstName: List[String] = List("1", "2", "3")
+  private val firstName: List[String] = List("Donát", "Bianka", "Gyula", "Gabi", "Domi", "Julcsi", "Jesszi",
+    "Barni", "Krisztina", "Hanna", "Anna", "Csongi", "Zoltán")
 
   def giveName: String = {
     familyName(Random.nextInt(familyName.length)) + " " + firstName(Random.nextInt(firstName.length))
