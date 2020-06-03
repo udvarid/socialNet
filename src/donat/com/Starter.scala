@@ -1,11 +1,13 @@
 package donat.com
 
-import donat.com.net.SocialNet
+import donat.com.net.NetInspector
 
 object Starter extends App {
-  val myNet = SocialNet(10)
 
-  myNet.makeFriends()
-  myNet.printUsers()
+  val inspector: NetInspector = NetInspector(10)
+
+  inspector.startInspection()
+
+  inspector.printTheNet()
 
 }

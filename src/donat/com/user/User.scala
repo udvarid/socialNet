@@ -14,13 +14,20 @@ case class User(name: String, age: Int) {
   def visitToInit(): Unit = {
     visitFlag.size = 0
     visitFlag.visited = false
+    visitFlag.inQueue = false
   }
 
   def visited(): Unit = {
     visitFlag.visited = true
   }
 
-  def isVisited(): Boolean = visitFlag.visited
+  def putIntoQueue(): Unit = {
+    visitFlag.inQueue = true
+  }
+
+  def isVisited: Boolean = visitFlag.visited
+
+  def isInQueue: Boolean = visitFlag.inQueue
 
   override def toString: String = {
     "Name: " + this.name + ". Age: " + this.age + ". Number of friends: " + friends.length

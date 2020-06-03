@@ -6,4 +6,6 @@ class VisitFlag {
 
   var size: Int = 0
 
+  var inQueue: Boolean = false
+
 }
