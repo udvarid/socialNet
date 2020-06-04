@@ -36,13 +36,23 @@ case class NetInspector(size: Int = 10, edges: Int = 3) {
             sizeOfNet += 1
           })
       }
-      println(s"At user ${myNet.users(i).name} the size of net is $sizeOfNet. Maximum length is $maxLenght")
+      println(s"At user ${myNet.users(i).name} the size of his/her personal net is $sizeOfNet. Maximum length is $maxLenght")
       myNet.users(i).resultFlag.sizeOfNet = sizeOfNet
       myNet.users(i).resultFlag.maximumLenght = maxLenght
       myNet.users(i).resultFlag.canReachEverybody = myNet.users.length - 1 == sizeOfNet
 
     }
     println("----------------")
+    val stateOfNet: String = if (myNet.users.forall(u => u.resultFlag.canReachEverybody))
+      "The whole net is connected" else "There are separated parts in the net"
+    val netMaxLength: Int = myNet.users.map(u => u.resultFlag.maximumLenght).max
+    val netMinlength: Int = myNet.users
+      .filter(u => u.friends.nonEmpty)
+      .map(u => u.resultFlag.maximumLenght).min
+    println(s"The size of the total net is ${myNet.users.length}. $stateOfNet. The maximum length is $netMaxLength " +
+      s"and the minimum length is $netMinlength")
+
+
 
   }
 
