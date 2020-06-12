@@ -12,4 +12,7 @@ object FilmStarter extends App{
 
   myNet.printFilms()
 
+  println("-------------")
+  myNet.everyBodyToMovie()
+  myNet.printUsersWithFilms()
 }

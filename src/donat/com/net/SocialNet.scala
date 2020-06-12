@@ -14,6 +14,7 @@ case class SocialNet(size: Int, edges: Int = 3, filmNumber: Int = 20) {
       if (filmsToFill.size == filmNumber) filmsToFill
       else createFilms(filmsToFill :+ FilmGenerator.giveFilm)
     }
+
     createFilms(List[Film]())
   }
 
@@ -37,6 +38,14 @@ case class SocialNet(size: Int, edges: Int = 3, filmNumber: Int = 20) {
     println(s"Number of edges: $numberOfEdges")
   }
 
+  def printUsersWithFilms(): Unit = {
+    users.foreach(user => {
+      println(s"User ${user.name} have been watched the following films. Favourite filmtype is ${user.favoriteFilmType}")
+      user.filmSeen.foreach(println)
+      println("--------------")
+    })
+  }
+
   def printFilms(): Unit = {
     films.foreach(println)
   }
@@ -55,7 +64,17 @@ case class SocialNet(size: Int, edges: Int = 3, filmNumber: Int = 20) {
         friendMaker(numberOfEdges)
       }
     }
+
     friendMaker(numberOfEdges)
+  }
+
+  def everyBodyToMovie(): Unit = {
+    users.foreach(u => {
+      while (u.filmSeen.size < 10) {
+        u.seeAFilm(films)
+      }
+    }
+    )
   }
 
   private def connectUsers(userOne: User, userTwo: User): Unit = {
