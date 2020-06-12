@@ -1,11 +1,21 @@
 package donat.com.net
 
+import donat.com.film.{Category, Film, FilmGenerator}
 import donat.com.user.{NameGenerator, User}
 
 import scala.annotation.tailrec
 import scala.util.Random
 
-case class SocialNet(size: Int, edges: Int = 3) {
+case class SocialNet(size: Int, edges: Int = 3, filmNumber: Int = 20) {
+
+  val films: List[Film] = {
+    @tailrec
+    def createFilms(filmsToFill: List[Film]): List[Film] = {
+      if (filmsToFill.size == filmNumber) filmsToFill
+      else createFilms(filmsToFill :+ FilmGenerator.giveFilm)
+    }
+    createFilms(List[Film]())
+  }
 
   val users: List[User] = {
     @tailrec
@@ -14,7 +24,8 @@ case class SocialNet(size: Int, edges: Int = 3) {
       else {
         val age: Int = Random.nextInt(50) + 15
         val name: String = NameGenerator.giveName
-        createUsers(userToFill :+ User(name, age))
+        val catLength: Int = Random.nextInt(Category.values.size)
+        createUsers(userToFill :+ User(name, age, Category.values.toList(catLength)))
       }
     }
 
@@ -24,6 +35,10 @@ case class SocialNet(size: Int, edges: Int = 3) {
   def printUsers(): Unit = {
     users.foreach(println)
     println(s"Number of edges: $numberOfEdges")
+  }
+
+  def printFilms(): Unit = {
+    films.foreach(println)
   }
 
   private def numberOfEdges: Int = {

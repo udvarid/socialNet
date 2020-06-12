@@ -1,6 +1,8 @@
 package donat.com.user
 
-case class User(name: String, age: Int) {
+import donat.com.film.Category
+
+case class User(name: String, age: Int, favoriteFilmType: Category.Value) {
 
   var friends: List[User] = List()
 
@@ -30,6 +32,7 @@ case class User(name: String, age: Int) {
   def isInQueue: Boolean = visitFlag.inQueue
 
   override def toString: String = {
-    "Name: " + this.name + ". Age: " + this.age + ". Number of friends: " + friends.length
+    "Name: " + this.name + ". Age: " + this.age + ". Number of friends: " + friends.length + ". Favorite filmtype is " +
+    favoriteFilmType
   }
 }
