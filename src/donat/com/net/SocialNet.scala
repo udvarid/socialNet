@@ -1,6 +1,6 @@
 package donat.com.net
 
-import donat.com.film.{Category, Film, FilmGenerator}
+import donat.com.film.{Category, Film, FilmGenerator, FilmRating}
 import donat.com.user.{NameGenerator, User}
 
 import scala.annotation.tailrec
@@ -75,6 +75,34 @@ case class SocialNet(size: Int, edges: Int = 3, filmNumber: Int = 20) {
       }
     }
     )
+  }
+
+  def giveFilmParis(): List[(FilmRating, FilmRating)] = {
+    for {
+      u <- users
+      fl1 <- u.filmSeen
+      fl2 <- u.filmSeen
+    } yield (fl1, fl2)
+  }
+
+  def filterFilms(filmPairs: List[(FilmRating, FilmRating)], choosedFilm: Film, givenRating: Int): List[(FilmRating, FilmRating)] = {
+    filmPairs.filter(p => !p._1.equals(p._2) &&
+      p._1.film.equals(choosedFilm) &&
+      p._1.rating.equals(givenRating) &&
+      p._2.rating.equals(5))
+  }
+
+  def giveAdvise(): Unit = {
+    val choosedFilm: Film = films(Random.nextInt(films.size))
+    val givenRating: Int = Random.nextInt(5) + 1
+    println(s"The choosed filme is '${choosedFilm.name}' with rating of $givenRating")
+    println("-----------")
+    val filmPairs: List[(FilmRating, FilmRating)] = giveFilmParis()
+    val filteredFilmPairs: List[(FilmRating, FilmRating)] = filterFilms(filmPairs, choosedFilm, givenRating)
+    filteredFilmPairs.foreach(println)
+    println("-----------")
+    filteredFilmPairs.groupBy(f => f._2).foreach(r => println(r._1.film.name + " - " + r._2.size))
+
   }
 
   private def connectUsers(userOne: User, userTwo: User): Unit = {
