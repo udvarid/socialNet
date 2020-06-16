@@ -89,7 +89,7 @@ case class SocialNet(size: Int, edges: Int = 3, filmNumber: Int = 20) {
     filmPairs.filter(p => !p._1.equals(p._2) &&
       p._1.film.equals(choosedFilm) &&
       p._1.rating.equals(givenRating) &&
-      p._2.rating.equals(5))
+      p._2.rating >= 4)
   }
 
   def giveAdvise(): Unit = {
@@ -97,11 +97,16 @@ case class SocialNet(size: Int, edges: Int = 3, filmNumber: Int = 20) {
     val givenRating: Int = Random.nextInt(5) + 1
     println(s"The choosed filme is '${choosedFilm.name}' with rating of $givenRating")
     println("-----------")
-    val filmPairs: List[(FilmRating, FilmRating)] = giveFilmParis()
-    val filteredFilmPairs: List[(FilmRating, FilmRating)] = filterFilms(filmPairs, choosedFilm, givenRating)
-    filteredFilmPairs.foreach(println)
-    println("-----------")
-    filteredFilmPairs.groupBy(f => f._2).foreach(r => println(r._1.film.name + " - " + r._2.size))
+    val filteredFilmPairs: List[(FilmRating, FilmRating)] = filterFilms(giveFilmParis(), choosedFilm, givenRating)
+    val advise: (Film, Int) = filteredFilmPairs
+      .groupBy(f => f._2)
+      .map(f => (f._1.film, f._2.size))
+      .toList
+      .minBy(-_._2)
+
+    println(s"My advise is ${advise._1.name}, which is a ${advise._1.category}. There are ${advise._2} other user(s) who rated this, with minimum 4 rating, after watched" +
+      s" the ${choosedFilm.name} with the same rating you gave.")
+    println("This is a great movie for you!")
 
   }
 
