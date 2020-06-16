@@ -4,15 +4,15 @@ import donat.com.net.SocialNet
 
 object FilmStarter extends App{
 
-  val myNet: SocialNet = SocialNet(20)
+  val myNet: SocialNet = SocialNet(100)
 
   //myNet.printUsers()
 
-  println("-------------")
+  //println("-------------")
 
   //myNet.printFilms()
 
-  println("-------------")
+  //println("-------------")
   myNet.everyBodyToMovie()
   //myNet.printUsersWithFilms()
 
